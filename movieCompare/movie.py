@@ -68,31 +68,31 @@ with open('data.csv', 'w+') as fout:
         cin.writerow(item)
 data1 = pd.read_csv('data.csv', encoding='utf-8')   
 
-#分析十年间 同一类型电影平均票房走势
+#十年间同一类型电影平均票房走势
 data = data1
 data = data.groupby(['type', 'year']).zpf.mean().unstack()
 data.fillna(0, inplace = True) 
 plt.figure(figsize = (12, 6))
-plt.title('同一类型电影平均票房走势', fontsize = 20)
+plt.title('同一类型电影十年间平均票房走势', fontsize = 20)
 plt.xlabel('年份')
 plt.ylabel('平均票房(万)')
 plt.plot(data.T)
 data.T.plot()
 
-#分析十年间 同一地区在前25排名中占比的变化趋势
+#十年间同一地区在前25排名中占比的变化趋势
 data = data1
 #mark设置为1/25，方便后边算比例
 data.mark = 0.04
 data = data.groupby(['area', 'year']).mark.sum().unstack()
 data.fillna(0, inplace = True)
 plt.figure(figsize = (12, 6))
-plt.title('同一地区在前25排名中占比的变化趋势', fontsize = 20)
+plt.title('同一地区十年间在前25排名中占比的变化趋势', fontsize = 20)
 plt.xlabel('年份')
 plt.ylabel('占比')
 plt.plot(data.T)
 data.T.plot()
 
-#分析十年间 是否有一种或多种类型的电影在十年间票房震荡非常厉害
+#十年间不同电影类型总票房的变化
 data = data1
 data = data.groupby(['type', 'year']).zpf.sum().unstack()
 data.fillna(0, inplace = True) 
